@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Управление мастер-классами</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="site-header">
+    <div>
+      <div class="brand">Театр: постановки</div>
+      <div class="subtitle">Разработка и проектирование управления театральными постановками</div>
+    </div>
+    <div>
+      <a href="/create" class="btn">Добавить постановку</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <h1>Постановки</h1>
+    <form method="get" action="/">
+      <input type="text" name="q" placeholder="Поиск по названию" value="{{ q }}">
+      <button type="submit">Поиск</button>
+    </form>
+
+    {% if productions %}
+      <ul class="list">
+      {% for prod in productions %}
+        <li>
+          <div class="title"><a href="/detail/{{ prod.id }}">{{ prod.title }}</a></div>
+          <div class="meta">Режиссёр: {{ prod.director or '—' }}<br>{{ prod.premiere_date.strftime('%Y-%m-%d %H:%M') if prod.premiere_date else 'Премьера не указана' }} • Мест: {{ prod.capacity }} • <span class="badge {{ prod.status|lower|replace(' ', '-') }}">{{ prod.status }}</span></div>
+          <div class="actions row">
+            <a href="/edit/{{ prod.id }}" class="button secondary">Редактировать</a>
+            <form method="post" action="/delete/{{ prod.id }}" onsubmit="return confirm('Удалить постановку?');" style="display:inline">
+              <button type="submit" class="button">Удалить</button>
+            </form>
+            <a href="/detail/{{ prod.id }}" class="button secondary">Подробнее</a>
+          </div>
+        </li>
+      {% endfor %}
+      </ul>
+    {% else %}
+      <p>Список постановок пуст.</p>
+    {% endif %}
+  </div>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{ action }} мастер-класс</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="site-header">
+    <div>
+      <div class="brand">Театр: постановки</div>
+      <div class="subtitle">Форма создания / редактирования постановки</div>
+    </div>
+    <div>
+      <a href="/" class="btn">К списку</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <h1>{{ action }} постановку</h1>
+    <form method="post">
+      <label>Название<br>
+        <input type="text" name="title" value="{{ production.title if production else '' }}" required>
+      </label>
+      <label>Режиссёр<br>
+        <input type="text" name="director" value="{{ production.director if production else '' }}">
+      </label>
+      <label>Жанр<br>
+        <input type="text" name="genre" value="{{ production.genre if production else '' }}">
+      </label>
+      <label>Премьера (YYYY-MM-DD or ISO)<br>
+        <input type="datetime-local" name="date" value="{{ production.premiere_date.strftime('%Y-%m-%dT%H:%M') if production and production.premiere_date else '' }}">
+      </label>
+      <label>Вместимость<br>
+        <input type="number" name="capacity" min="0" value="{{ production.capacity if production else 0 }}">
+      </label>
+      <label>Статус<br>
+        <input type="text" name="status" value="{{ production.status if production else 'Подготовка' }}">
+      </label>
+      <label>Описание<br>
+        <textarea name="description">{{ production.description if production else '' }}</textarea>
+      </label>
+      <div class="form-actions">
+        <button type="submit">{{ action }}</button>
+        <a href="/" class="button secondary">Отмена</a>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

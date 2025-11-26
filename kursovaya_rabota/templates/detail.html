@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{ production.title }}</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="site-header">
+    <div>
+      <div class="brand">Театр: постановки</div>
+      <div class="subtitle">Информация о постановке</div>
+    </div>
+    <div>
+      <a href="/" class="btn">К списку</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <h1>{{ production.title }}</h1>
+    <div class="meta">Режиссёр: {{ production.director or '—' }} • Жанр: {{ production.genre or '—' }}</div>
+    <div class="meta">Премьера: {{ production.premiere_date.strftime('%Y-%m-%d %H:%M') if production.premiere_date else 'Не указана' }} • Вместимость: {{ production.capacity }} • <span class="badge {{ production.status|lower|replace(' ', '-') }}">{{ production.status }}</span></div>
+    <div class="description">{{ production.description or '—' }}</div>
+    <p style="margin-top:14px">
+      <a href="/edit/{{ production.id }}" class="button secondary">Редактировать</a>
+      <a href="/" class="button secondary">Назад к списку</a>
+    </p>
+  </div>
+</body>
+</html>
